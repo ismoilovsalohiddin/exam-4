@@ -1,27 +1,31 @@
-import axios from "axios";
-import { authStore } from "store/auth.store";
+import axios from 'axios';
+import { authStore } from 'store/auth.store';
 
 export const refreshToken = () => {
-  request.post("/token/refresh", { refresh_token: authStore.token.refresh_token });
+  request.post('/token/refresh', { refresh_token: authStore.token.refresh_token });
 };
-
-
-const token = JSON.parse(localStorage.getItem("auth")).userData.data.tokens
-
-const request = axios.create({ baseURL: import.meta.env.VITE_BASE_URL, });
+const request = axios.create({ baseURL: import.meta.env.VITE_BASE_URL });
 
 const onError = (error) => {
-  if(error.code === 401) {
+  if (error.code === 401) {
     refreshToken();
-  };
+  }
 };
 
-request.interceptors.response.use(response => response, onError);
+// const onRefreshError = (error) => {
+//   if (error.code === 401) {
+//     authStore.logout();
+//   }
+// };
 
-request.interceptors.request.use(config => {
-  config.headers["Content-Type"] = "application/json";
-  config.headers["Authorization"] = token.access_token;
+const tokens = JSON.parse(localStorage.getItem('auth'));
+console.log(tokens);
+request.interceptors.response.use((response) => response, onError);
+
+request.interceptors.request.use((config) => {
+  config.headers['Content-Type'] = 'application/json';
+  config.headers['Authorization'] = tokens?.userData?.data?.tokens?.access_token
   return config;
 });
 
-export default request
+export default request;

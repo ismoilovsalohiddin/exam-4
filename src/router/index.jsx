@@ -7,6 +7,7 @@ import { observer } from 'mobx-react-lite';
 import { AuthRoutes } from 'modules/Auth/routes';
 import { SubjectsRoutes } from 'modules/Subjects/routes';
 import { TestsRoutes } from 'modules/Tests/routes';
+import Profile from 'modules/Profile/Profile';
 
 export const Router = observer(() => {
   const isAuth = authStore.isAuth;
@@ -21,7 +22,6 @@ export const Router = observer(() => {
       </Routes>
     );
   }
-
   if (role === 'admin') {
     return (
       <Routes>
@@ -30,7 +30,7 @@ export const Router = observer(() => {
           <Route path="/users/*" element={<UsersRoutes />} />
           <Route path="/subjects/*" element={<SubjectsRoutes />} />
           <Route path="/test/*" element={<TestsRoutes />} />
-          <Route path="*" element={<Navigate to="/home" />} />
+          <Route path="/profile/*" element={<Profile/>} />
         </Route>
       </Routes>
     );
