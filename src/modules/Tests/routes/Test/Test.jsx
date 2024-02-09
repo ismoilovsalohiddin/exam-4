@@ -1,4 +1,4 @@
-import { Box, Checkbox, Heading, SimpleGrid } from '@chakra-ui/react';
+import { Box, Checkbox, Heading } from '@chakra-ui/react';
 import useTestProps from './useTestProps';
 
 export const Test = () => {
